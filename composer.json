@@ -1,0 +1,21 @@
+{
+    "name": "abcms/yii2-cms",
+    "type": "yii2-extension",
+    "description": "",
+    "keywords": [
+    ],
+    "authors": [
+    ],
+    "support": {
+    },
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {"abcms\\cms\\": ""}
+    },
+    "bin": [
+    ],
+    "extra": {
+    }
+}
