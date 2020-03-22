@@ -16,7 +16,7 @@ class M200318154828CreateContentItemTable extends Migration
     {
         $this->createTable('{{%content_item}}', [
             'id' => $this->primaryKey(),
-            'structureId' => $this->integer()->notNull(),
+            'contentTypeId' => $this->integer()->notNull(),
             'active' => $this->boolean()->notNull()->defaultValue(1),
             'deleted' => $this->boolean()->notNull()->defaultValue(0),
             'ordering' => $this->integer()->notNull()->defaultValue(1),

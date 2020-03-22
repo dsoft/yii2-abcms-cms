@@ -19,6 +19,8 @@ use yii\helpers\Inflector;
  */
 class ContentType extends \abcms\library\base\BackendActiveRecord
 {
+    const TYPE_LIST = 1;
+    
     /**
      * {@inheritdoc}
      */
@@ -80,7 +82,7 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
     public static function getTypeList()
     {
         $array = [
-            1 => Yii::t('abcms.cms', 'List'),
+            self::TYPE_LIST => Yii::t('abcms.cms', 'List'),
         ];
         return $array;
     }
@@ -115,5 +117,14 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
         }
         $html = '<span class="glyphicon glyphicon-'.$this->icon.'"></span>';
         return $html;
+    }
+    
+    /**
+     * Returns namePlural if it's set, otherwise converts the name to its plural form.
+     * @return string
+     */
+    public function getPluralName()
+    {
+        return $this->namePlural ? $this->namePlural : Inflector::pluralize($this->name);
     }
 }

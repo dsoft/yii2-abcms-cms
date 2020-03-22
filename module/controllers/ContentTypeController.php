@@ -59,7 +59,7 @@ class ContentTypeController extends AdminController
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $structure = new Structure(['name' => $mode->generateStructureName()]);
+            $structure = new Structure(['name' => $model->generateStructureName()]);
             if($structure->save(false)){
                 $model->structureId = $structure->id;
                 if($model->save(false)){
