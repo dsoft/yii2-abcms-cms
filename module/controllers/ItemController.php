@@ -102,6 +102,7 @@ class ItemController extends AdminController
         $model = $this->findModel($id);
         $contentType = $this->findContentTypeModel($model->contentTypeId);
         $structure = $contentType->structure;
+        $structure->fillFieldsValues($model->returnModelId(), $model->id);
         $dynamicModel = $structure->getDynamicModel();
 
         if ($model->load(Yii::$app->request->post()) && $dynamicModel->load(Yii::$app->request->post()) && $model->validate() && $dynamicModel->validate()) {
