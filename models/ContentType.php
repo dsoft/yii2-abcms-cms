@@ -20,6 +20,7 @@ use yii\helpers\Inflector;
 class ContentType extends \abcms\library\base\BackendActiveRecord
 {
     const TYPE_LIST = 1;
+    const TYPE_PAGE = 2;
     
     /**
      * {@inheritdoc}
@@ -39,6 +40,18 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
             [['typeId', 'structureId'], 'integer'],
             [['name', 'namePlural', 'icon'], 'string', 'max' => 255],
         ];
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            [
+                'class' => \abcms\structure\behaviors\CustomFieldsBehavior::className(),
+            ],
+        ]);
     }
 
     /**
@@ -83,6 +96,7 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
     {
         $array = [
             self::TYPE_LIST => Yii::t('abcms.cms', 'List'),
+            self::TYPE_PAGE => Yii::t('abcms.cms', 'Page'),
         ];
         return $array;
     }
@@ -126,5 +140,16 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
     public function getPluralName()
     {
         return $this->namePlural ? $this->namePlural : Inflector::pluralize($this->name);
+    }
+    
+    /**
+     * Return a specific custom field from the main structure
+     * @param string $field
+     * @return string|null
+     */
+    public function getField($field)
+    {
+        $structure = $this->structure;
+        return $this->getCustomField($field, $structure->name);
     }
 }

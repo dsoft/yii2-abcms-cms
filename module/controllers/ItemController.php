@@ -142,7 +142,7 @@ class ItemController extends AdminController
      */
     protected function findContentTypeModel($id)
     {
-        if (($model = ContentType::findOne($id)) !== null) {
+        if (($model = ContentType::findOne(['id' => $id, 'typeId' => ContentType::TYPE_LIST])) !== null) {
             return $model;
         }
 

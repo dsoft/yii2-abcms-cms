@@ -5,16 +5,15 @@ namespace abcms\cms\module\controllers;
 use Yii;
 use abcms\cms\models\ContentType;
 use abcms\library\base\AdminController;
-use yii\web\NotFoundHttpException;
 
 /**
- * ListController implements the CRUD actions for ContentType model.
+ * ListController displays all content with type 'list'
  */
 class ListController extends AdminController
 {
 
     /**
-     * Lists all ContentType models.
+     * Lists all ContentType models with type equal to 'list'.
      * @return mixed
      */
     public function actionIndex()
@@ -27,21 +26,5 @@ class ListController extends AdminController
         return $this->render('index', [
             'models' => $models,
         ]);
-    }
-
-    /**
-     * Finds the ContentType model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return ContentType the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = ContentType::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('acbms.cms', 'The requested page does not exist.'));
     }
 }

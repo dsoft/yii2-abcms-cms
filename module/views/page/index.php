@@ -9,19 +9,19 @@ use abcms\cms\assets\CmsAsset;
 
 CmsAsset::register($this);
 
-$this->title = Yii::t('acbms.cms', 'Lists');
+$this->title = Yii::t('acbms.cms', 'Pages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content-type-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="list-header"><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
         <?php foreach($models as $model): ?>
         <div class="col-xs-6 col-sm-3 col-md-3">
-            <a class="list-item" href="<?= Url::to(['item/index', 'contentTypeId' => $model->id]) ?>">
+            <a class="list-item" href="<?= Url::to(['page/update', 'id' => $model->id]) ?>">
                 <?= $model->getIconHtml() ?>
-                <?= $model->getPluralName() ?>
+                <?= $model->name ?>
             </a>
         </div>
         <?php endforeach; ?>
