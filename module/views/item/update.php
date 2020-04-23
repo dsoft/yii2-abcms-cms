@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = Yii::t('abcms.cms', 'Update');
     $this->render('_form', [
     'model' => $model,
     'structure' => $structure,
+    'structureTranslation' => $structureTranslation,
     ])
     ?>
 

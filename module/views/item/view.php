@@ -38,4 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
     
     <?= \abcms\structure\widgets\View::widget(['model' => $model, 'structure' => $structure]) ?>
+    
+    <?=
+    \abcms\multilanguage\widgets\TranslationView::widget([
+        'model' => $structure->getStructureTranslation($model),
+    ])
+    ?>
 </div>

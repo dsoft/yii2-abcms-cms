@@ -16,6 +16,8 @@ use yii\helpers\Inflector;
  * @property string $icon
  * @property integer $structureId
  * @property integer $deleted
+ * 
+ * @property Structure $structure
  */
 class ContentType extends \abcms\library\base\BackendActiveRecord
 {
@@ -72,7 +74,7 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
     
     /**
      * Structure relation
-     * @return mixed
+     * @return \yii\db\ActiveQuery
      */
     public function getStructure()
     {

@@ -72,15 +72,16 @@ class ItemController extends AdminController
     public function actionCreate($contentTypeId)
     {
         $contentType = $this->findContentTypeModel($contentTypeId);
-        $structure = $contentType->structure;
-        $dynamicModel = $structure->getDynamicModel();
         $model = new ContentItem();
         $model->loadDefaultValues();
+        
+        $structure = $contentType->structure;
+        $structureTranslation = $structure->getStructureTranslation($model);
+        $model->enableAutoStructuresSaving($structure, $structureTranslation);
 
-        if ($model->load(Yii::$app->request->post()) && $dynamicModel->load(Yii::$app->request->post()) && $model->validate() && $dynamicModel->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->contentTypeId = $contentType->id;
             if ($model->save(false)) {
-                $model->saveStructureData($structure->id, $dynamicModel->attributes);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -88,6 +89,7 @@ class ItemController extends AdminController
                     'model' => $model,
                     'contentType' => $contentType,
                     'structure' => $structure,
+                    'structureTranslation' => $structureTranslation,
         ]);
     }
 
@@ -101,13 +103,14 @@ class ItemController extends AdminController
     {
         $model = $this->findModel($id);
         $contentType = $this->findContentTypeModel($model->contentTypeId);
+        
         $structure = $contentType->structure;
         $structure->fillFieldsValues($model->returnModelId(), $model->id);
-        $dynamicModel = $structure->getDynamicModel();
-
-        if ($model->load(Yii::$app->request->post()) && $dynamicModel->load(Yii::$app->request->post()) && $model->validate() && $dynamicModel->validate()) {
+        $structureTranslation = $structure->getStructureTranslation($model);
+        $model->enableAutoStructuresSaving($structure, $structureTranslation);
+        
+        if ($model->load(Yii::$app->request->post())) {
             if ($model->save(false)) {
-                $model->saveStructureData($structure->id, $dynamicModel->attributes);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -115,6 +118,7 @@ class ItemController extends AdminController
                     'model' => $model,
                     'contentType' => $contentType,
                     'structure' => $structure,
+                    'structureTranslation' => $structureTranslation,
         ]);
     }
 

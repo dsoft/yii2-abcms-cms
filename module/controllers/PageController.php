@@ -41,15 +41,21 @@ class PageController extends AdminController
         $structure = $model->structure;
         $structure->fillFieldsValues($model->returnModelId(), $model->id);
         $dynamicModel = $structure->getDynamicModel();
+        
+        $structureTranslation = $structure->getStructureTranslation($model);
+        $structureTranslationModel = $structureTranslation->getTranslationModel();
 
-        if ($dynamicModel->load(Yii::$app->request->post()) && $dynamicModel->validate()) {
+        $post = Yii::$app->request->post();
+        if ($dynamicModel->load($post) && $structureTranslationModel->load($post) && $dynamicModel->validate() && $structureTranslationModel->validate()) {
             $model->saveStructureData($structure->id, $dynamicModel->attributes);
+            $structureTranslation->saveTranslationData($structureTranslationModel->attributes);
             Yii::$app->session->setFlash('success', 'Data saved successfully.');
             return $this->refresh();
         }
         return $this->render('update', [
                     'model' => $model,
                     'structure' => $structure,
+                    'structureTranslation' => $structureTranslation,
         ]);
     }
 

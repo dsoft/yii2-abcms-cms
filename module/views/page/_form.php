@@ -13,6 +13,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     
     <?= \abcms\structure\widgets\Form::widget(['model' => $model, 'structure' => $structure, 'form' => $form]) ?>
+    
+    <?= \abcms\multilanguage\widgets\TranslationForm::widget(['model' => $structureTranslation, 'form' => $form]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('abcms.cms', 'Update'), ['class' => 'btn btn-primary']) ?>
