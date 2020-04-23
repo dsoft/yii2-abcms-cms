@@ -110,7 +110,7 @@ class ItemController extends AdminController
         $model->enableAutoStructuresSaving($structure, $structureTranslation);
         
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->save(false)) {
+            if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
