@@ -18,6 +18,8 @@ use yii\helpers\Inflector;
  * @property integer $deleted
  * 
  * @property Structure $structure
+ * @property ContentItem[] $items
+ * @property ContentItem[] $activeItems
  */
 class ContentType extends \abcms\library\base\BackendActiveRecord
 {
@@ -38,6 +40,7 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
     public function rules()
     {
         return [
+            ['name' , 'unique'],
             [['name', 'typeId'], 'required'],
             [['typeId', 'structureId'], 'integer'],
             [['name', 'namePlural', 'icon'], 'string', 'max' => 255],
@@ -88,6 +91,24 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
     public function getStructureName()
     {
         return $this->structure ? $this->structure->name : null;
+    }
+    
+    /**
+     * Items relation
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItems()
+    {
+        return $this->hasMany(ContentItem::className(), ['contentTypeId' => 'id'])->orderBy(['ordering' => SORT_ASC, 'id' => SORT_DESC])->inverseOf('contentType');
+    }
+    
+    /**
+     * Active items relation
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActiveItems()
+    {
+        return $this->getItems()->andWhere(['active'=>1]);
     }
     
     /**
@@ -153,5 +174,35 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
     {
         $structure = $this->structure;
         return $this->getCustomField($field, $structure->name);
+    }
+    
+    /**
+     * Return the translated custom field from the main structure
+     * @param string $field
+     * @return string|null
+     */
+    public function getTranslatedField($field, $language = null)
+    {
+        if(!$language && Yii::$app->language !== Yii::$app->sourceLanguage){
+            $language = Yii::$app->language;
+        }
+        $structure = $this->structure;
+        return $this->getCustomField($field, $structure->name, $language);
+    }
+    
+    /**
+     * Overwrites delete function to delete structure also
+     * @return boolean
+     */
+    public function delete()
+    {
+        if(!$this->beforeDelete()) {
+                return false;
+        }
+        $structure = $this->structure;
+        if($structure){
+            $structure->delete();
+        }
+        return parent::delete();
     }
 }

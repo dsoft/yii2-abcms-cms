@@ -23,6 +23,13 @@ class M200318154630CreateContentTypeTable extends Migration
             'structureId' => $this->integer()->notNull(),
             'deleted' => $this->boolean()->notNull()->defaultValue(0),
         ]);
+        
+        // creates index for column `name`
+        $this->createIndex(
+            'idx-content_type-name',
+            'content_type',
+            'name'
+        );
     }
 
     /**
@@ -30,6 +37,12 @@ class M200318154630CreateContentTypeTable extends Migration
      */
     public function safeDown()
     {
+        // drops index for column `name`
+        $this->dropIndex(
+            'idx-content_type-name',
+            'content_type'
+        );
+        
         $this->dropTable('{{%content_type}}');
     }
 }

@@ -91,6 +91,20 @@ class ContentItem extends \abcms\library\base\BackendActiveRecord
     }
     
     /**
+     * Return the translated custom field from the main structure
+     * @param string $field
+     * @return string|null
+     */
+    public function getTranslatedField($field, $language = null)
+    {
+        if(!$language && Yii::$app->language !== Yii::$app->sourceLanguage){
+            $language = Yii::$app->language;
+        }
+        $structure = $this->structure;
+        return $this->getCustomField($field, $structure->name, $language);
+    }
+    
+    /**
      * Check if custom field 'title' or 'name' exists and return it
      * @return string|null
      */
