@@ -21,6 +21,7 @@ class M200318154630CreateContentTypeTable extends Migration
             'typeId' => $this->smallInteger()->notNull(),
             'icon' => $this->string()->null(),
             'structureId' => $this->integer()->notNull(),
+            'visible' => $this->boolean()->notNull()->defaultValue(1),
             'deleted' => $this->boolean()->notNull()->defaultValue(0),
         ]);
         

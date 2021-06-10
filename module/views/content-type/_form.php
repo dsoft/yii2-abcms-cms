@@ -26,6 +26,8 @@ use abcms\structure\models\Structure;
     <?= $form->field($model, 'structureId')->dropDownList(Structure::getList()) ?>
     <?php endif; ?>
     
+    <?= $form->field($model, 'visible')->checkbox() ?>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('abcms.cms', 'Create') : Yii::t('abcms.cms', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

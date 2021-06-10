@@ -50,6 +50,7 @@ $structureRoute = Yii::$app->controller->module->structureRoute;
                 'attribute' => 'structureId',
                 'value' => $model->structureName,
             ],
+            'visible:boolean',
         ],
     ])
     ?>

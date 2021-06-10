@@ -20,7 +20,10 @@ class PageController extends AdminController
     public function actionIndex()
     {
         $models = ContentType::find()
-                ->andWhere(['typeId' => ContentType::TYPE_PAGE])
+                ->andWhere([
+                    'typeId' => ContentType::TYPE_PAGE,
+                    'visible' => 1,
+                    ])
                 ->orderBy(['name' => SORT_ASC])
                 ->all();
 

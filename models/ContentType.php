@@ -15,6 +15,7 @@ use yii\helpers\Inflector;
  * @property integer $typeId
  * @property string $icon
  * @property integer $structureId
+ * @property integer $visible
  * @property integer $deleted
  * 
  * @property Structure $structure
@@ -42,7 +43,7 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
         return [
             ['name' , 'unique'],
             [['name', 'typeId'], 'required'],
-            [['typeId', 'structureId'], 'integer'],
+            [['typeId', 'structureId', 'visible'], 'integer'],
             [['name', 'namePlural', 'icon'], 'string', 'max' => 255],
         ];
     }
@@ -71,6 +72,7 @@ class ContentType extends \abcms\library\base\BackendActiveRecord
             'typeId' => Yii::t('abcms.cms', 'Type'),
             'icon' => Yii::t('abcms.cms', 'Icon'),
             'structureId' => Yii::t('abcms.cms', 'Structure'),
+            'visible' => Yii::t('abcms.cms', 'Visible'),
             'deleted' => Yii::t('abcms.cms', 'Deleted'),
         ];
     }

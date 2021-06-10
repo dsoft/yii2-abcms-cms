@@ -19,7 +19,10 @@ class ListController extends AdminController
     public function actionIndex()
     {
         $models = ContentType::find()
-                ->andWhere(['typeId' => ContentType::TYPE_LIST])
+                ->andWhere([
+                    'typeId' => ContentType::TYPE_LIST,
+                    'visible' => 1,
+                    ])
                 ->orderBy(['name' => SORT_ASC])
                 ->all();
 
